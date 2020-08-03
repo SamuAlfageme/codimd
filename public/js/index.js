@@ -2057,8 +2057,12 @@ socket.on('refresh', function (data) {
     }
     // parse mode from url
     if (window.location.search.length > 0) {
-      var urlMode = modeType[window.location.search.substr(1)]
-      if (urlMode) appState.currentMode = urlMode
+      var urlParams = new URLSearchParams(location.search)
+      for (const urlParamKey of urlParams.keys()) {
+        if (modeType[urlParamKey]) {
+          appState.currentMode = modeType[urlParamKey]
+        }
+      }
     }
     changeMode(appState.currentMode)
     if (nocontent && !visibleXS) {
